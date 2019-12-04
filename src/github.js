@@ -1,7 +1,7 @@
 
 const rp = require('request-promise');
 
-const configs = require('./configs/default.json');
+const configs = require('../configs/default.json');
 
 const allRepos = async () => {
   const options = {
