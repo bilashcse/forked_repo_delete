@@ -1,12 +1,7 @@
-const express = require('express');
+
 const rp = require('request-promise');
 
 const configs = require('./configs/default.json');
-
-const app = express();
-
-app.listen(3030, () => console.log('Server started on port 3030'));
-
 
 const findForkedRepos = (repos) => repos.filter((r) => r.fork === true);
 
