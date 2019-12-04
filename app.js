@@ -28,7 +28,6 @@ const allRepos = async () => {
     name: r.name,
     full_name: r.full_name,
     fork: r.fork,
-    forks: r.fork,
     language: r.language,
   }));
 
@@ -42,16 +41,14 @@ const deleteForedRepo = async (repo) => {
 
   try {
     const options = {
-      method: 'POST',
+      method: 'DELETE',
       uri: `https://api.github.com/repos/${repo.full_name}`,
-      header: {
+      qs: {
         access_token: configs.accessToken,
       },
       headers: {
-        'User-Agent':
-                  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
       },
-      json: true,
     };
     await rp(options);
   } catch (err) {
@@ -59,7 +56,7 @@ const deleteForedRepo = async (repo) => {
   }
 };
 
-(async function init() {
+async function init() {
   const forkedRepos = await allRepos();
   console.log(forkedRepos);
 
@@ -70,4 +67,10 @@ const deleteForedRepo = async (repo) => {
       await deleteForedRepo(forkedRepos[i]);
     }
   }
-}());
+  console.log('Forked Repos are deleted successfully');
+}
+
+
+module.exports = {
+  init,
+};
