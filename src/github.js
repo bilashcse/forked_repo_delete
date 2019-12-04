@@ -3,8 +3,6 @@ const rp = require('request-promise');
 
 const configs = require('./configs/default.json');
 
-const findForkedRepos = (repos) => repos.filter((r) => r.fork === true);
-
 const allRepos = async () => {
   const options = {
     uri: `https://api.github.com/users/${configs.userName}/repos`,
@@ -19,15 +17,11 @@ const allRepos = async () => {
   };
 
   const results = await rp(options);
-  const repos = results.map((r) => ({
+  return results.filter((r) => r.fork === true).map((r) => ({
     name: r.name,
     full_name: r.full_name,
     fork: r.fork,
-    language: r.language,
   }));
-
-  const forked = findForkedRepos(repos);
-  return forked;
 };
 
 
